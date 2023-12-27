@@ -11,12 +11,17 @@ const Stack = createStackNavigator();
 const TopNav = createStackNavigator();
 
 const CustomNavigationBar = ({ navigation }) => (
-  <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>
-    <Ionicons name="menu" size={24} color="#C12267" onPress={() => navigation.openDrawer()} />
-    <Text style={{ fontSize: 18, fontWeight: 'bold' }}></Text>
-    <Ionicons name="notifications" size={24} color="#C12267"  />
+  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingHorizontal: 16, paddingTop: 30 }}>
+    <Ionicons name="menu" size={30} color="#C12267" onPress={() => navigation.openDrawer()} />
+    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+      <Ionicons name="file-tray" size={30} color="#C12267" />
+      <Ionicons name="location-outline" size={30} color="#C12267" />
+      <Ionicons name="notifications-outline" size={30} color="#C12267" />
+    </View>
   </View>
 );
+
+
 
 const HomeStack = ({ navigation }) => (
   <Stack.Navigator>
@@ -25,7 +30,7 @@ const HomeStack = ({ navigation }) => (
       component={HomeScreen}
       options={{
         header: () => <CustomNavigationBar navigation={navigation} />,
-        title: null, // Set headerTitle to null to hide the title
+        title: '', 
       }}
     />
   </Stack.Navigator>
@@ -86,13 +91,15 @@ export default function App() {
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
-          },
+          },   
+            headerShown: false,
         })}
         tabBarOptions={{
           activeTintColor: '#C12267',
           inactiveTintColor: 'gray',
           headerShown: false,
         }}
+        
       >
         <Tab.Screen name="Home" component={HomeStack}  />
         <Tab.Screen name="Info" component={InfoStack} />

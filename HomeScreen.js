@@ -21,14 +21,21 @@ const HomeScreen = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const cardData = ["wellness", "Brand details", "Ask Doctor", "Women Care"];
+  const categoryData = [
+    "DSF Deals",
+    "Dermocosmetics",
+    "Health Checkup",
+    "Suppliments",
+    "Diabetes care",
+  ];
 
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products")
       .then(function (response) {
-        console.log(response);
         setAllProducts(response.data);
         setProducts(response.data);
       })
@@ -39,7 +46,6 @@ const HomeScreen = () => {
     axios
       .get("https://fakestoreapi.com/products/categories")
       .then(function (response) {
-        console.log("categories", response);
         setCategories(response.data);
       })
       .catch(function (error) {
@@ -50,17 +56,33 @@ const HomeScreen = () => {
   const renderCategoryButton = (category) => (
     <TouchableOpacity
       key={category}
-      style={styles.categoryButton}
+      style={[
+        styles.categoryButton,
+        {
+          backgroundColor: selectedCategory === category ? "#CB218E" : "white",
+        },
+      ]}
       onPress={() => handleCategoryPress(category)}
     >
-      <Text>{category}</Text>
+      <Text
+        style={{
+          color: selectedCategory === category ? "white" : "black",
+        }}
+      >
+        {category}
+      </Text>
     </TouchableOpacity>
   );
 
   const renderCategoryCard = (category) => (
     <TouchableOpacity
       key={category}
-      style={styles.categoryCard}
+      style={[
+        styles.categoryCard,
+        {
+          backgroundColor: category === "Dermocosmetics" ? "#CB218E" : "white",
+        },
+      ]}
       // onPress={() => handleCategoryPress(category)}
     >
       {getCategoryIcon(category)}
@@ -68,22 +90,52 @@ const HomeScreen = () => {
     </TouchableOpacity>
   );
 
+  const renderCategoryDataCard = (category) => (
+    <TouchableOpacity
+      key={category}
+      style={styles.categoryDataCard} 
+          // onPress={() => handleCategoryPress(category)}
+    >
+      {getCategoryIcon(category)}
+      <Text>{category}</Text>
+    </TouchableOpacity>
+  );
+
   const getCategoryIcon = (category) => {
     let icon;
-    let iconColor = "#CB218E";
+    let iconColor =  category == "Dermocosmetics" ? "#CB218E" : "white";
 
     switch (category) {
       case "wellness":
-        icon = <MaterialIcons name="fitness-center" size={24} color="white" />;
+        icon = (
+          <MaterialIcons name="fitness-center" size={50} color="#CB218E" />
+        );
         break;
       case "Brand details":
-        icon = <MaterialCommunityIcons name="tag" size={24} color="white" />;
+        icon = (
+          <MaterialIcons name="thumb-up-off-alt" size={50} color="#CB218E" />
+        );
         break;
       case "Ask Doctor":
-        icon = <FontAwesome5 name="user-md" size={24} color="white" />;
+        icon = <FontAwesome5 name="user-md" size={50} color="#CB218E" />;
         break;
       case "Women Care":
-        icon = <MaterialIcons name="category" size={24} color="white" />;
+        icon = <MaterialIcons name="category" size={50} color="#CB218E" />;
+        break;
+      case "DSF Deals":
+        icon = <MaterialIcons name="thumb-up-off-alt" size={50} color="grey" />;
+        break;
+      case "Dermocosmetics":
+        icon = <MaterialIcons name="emoji-emotions" size={50} color="white" style={{backgroundColor:"#CB218E"}}  />;
+        break;
+      case "Health Checkup":
+        icon = <MaterialIcons name="person-pin" size={50} color="grey" />;
+        break;
+      case "Suppliments":
+        icon = <MaterialIcons name="flag" size={50} color="grey" />;
+        break;
+      case "Diabetes care":
+        icon = <MaterialIcons name="category" size={50} color="grey" />;
         break;
       default:
         icon = null;
@@ -104,6 +156,7 @@ const HomeScreen = () => {
   };
 
   const handleCategoryPress = (category) => {
+    setSelectedCategory(category);
     const filteredProducts = allProducts.filter(
       (product) => product.category === category
     );
@@ -134,12 +187,15 @@ const HomeScreen = () => {
       />
       <Image
         source={require("./assets/adImage.png")}
-        style={{ width: 375, height: 180, borderRadius: 8 }}
+        style={{ width: 375, height: 180, borderRadius: 30,marginBottom:20 }}
       />
-      <View style={styles.cardContainer}>
+      <View style={styles.cardDataContainer}>
         {cardData.map((category) => renderCategoryCard(category))}
       </View>
-      <Text style={{ marginBottom: 10 }}>Shop By Category</Text>
+      <Text style={{ marginBottom: 10,fontWeight:"bold" }}>Shop By Category</Text>
+      <View style={styles.cardContainer}>
+        {categoryData.map((category) => renderCategoryDataCard(category))}
+      </View>
       <View style={{ display: "flex", flexDirection: "row" }}>
         {categories.map((category) => renderCategoryButton(category))}
       </View>
@@ -172,7 +228,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
     padding: 8,
     backgroundColor: "#e0e0e0",
-    borderRadius: 8,
+    borderRadius: 15,
     marginBottom: 10,
   },
   productContainer: {
@@ -203,15 +259,23 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
     marginBottom: 16,
+    marginLeft:-15,
+    marginRight:-15,
+    display: "flex",
+    backgroundColor: "#D3D3D3",
+  },
+  cardDataContainer: {
+    flexDirection: "row",
+    marginBottom: 16,
     display: "flex",
   },
   categoryCard: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
     borderRadius: 8,
-    padding: 2,
+    padding: 1,
     marginTop: 7,
-    marginRight: 16,
-    shadowColor: "#000",
+    marginRight: 10,
+    // shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -224,6 +288,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginTop: 8,
+  },
+  categoryDataCard: {
+    backgroundColor: "#D3D3D3",
+    borderRadius: 8,
+    padding: 5,
+    marginTop: 7,
+    marginRight: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
 });
 
