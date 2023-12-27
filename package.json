@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@expo/vector-icons": "^13.0.0",
     "@mui/icons-material": "^5.15.1",
     "@mui/material": "^5.15.1",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -23,9 +24,9 @@
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-axios": "^0.17.1",
-    "react-redux": "^9.0.4",
     "react-native-web": "~0.19.6",
-    "@expo/vector-icons": "^13.0.0"
+    "react-redux": "^9.0.4",
+    "expo-linear-gradient": "~12.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

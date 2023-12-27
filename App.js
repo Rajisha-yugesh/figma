@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './HomeScreen';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicons from expo vector icons
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -12,9 +12,9 @@ const TopNav = createStackNavigator();
 
 const CustomNavigationBar = ({ navigation }) => (
   <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>
-    <Ionicons name="menu" size={24} color="black" onPress={() => navigation.openDrawer()} />
+    <Ionicons name="menu" size={24} color="#C12267" onPress={() => navigation.openDrawer()} />
     <Text style={{ fontSize: 18, fontWeight: 'bold' }}></Text>
-    <Ionicons name="notifications" size={24} color="black"  />
+    <Ionicons name="notifications" size={24} color="#C12267"  />
   </View>
 );
 
@@ -25,6 +25,7 @@ const HomeStack = ({ navigation }) => (
       component={HomeScreen}
       options={{
         header: () => <CustomNavigationBar navigation={navigation} />,
+        title: null, // Set headerTitle to null to hide the title
       }}
     />
   </Stack.Navigator>
@@ -49,7 +50,7 @@ const SettingsStack = () => {
 const CartStack = () => {
   return (
     <View>
-      <Text>Info Screen</Text>
+      <Text>cart Screen</Text>
     </View>
   );
 };
@@ -57,7 +58,7 @@ const CartStack = () => {
 const ProfileStack = () => {
   return (
     <View>
-      <Text>Info Screen</Text>
+      <Text>Profile Screen</Text>
     </View>
   );
 };
@@ -88,7 +89,7 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#C12267',
           inactiveTintColor: 'gray',
           headerShown: false,
         }}
